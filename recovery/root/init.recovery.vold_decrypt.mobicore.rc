@@ -1,0 +1,18 @@
+on fs
+    write /proc/bootprof "start mobicore (on fs)"
+    chmod 0600 /dev/mobicore
+    chown system system /dev/mobicore
+    chmod 0666 /dev/mobicore-user
+    chown system system /dev/mobicore-user
+    write /proc/bootprof "start mobicore end (on fs)"
+
+# Start Daemon (Registry directories should already be present)
+service sys_mobicore /system/bin/mcDriverDaemon -r /system/app/mcRegistry/020f0000000000000000000000000000.drbin -r /system/app/mcRegistry/05120000000000000000000000000000.drbin -r /system/app/mcRegistry/070b0000000000000000000000000000.drbin -r /system/app/mcRegistry/020b0000000000000000000000000000.drbin -r /system/app/mcRegistry/030b0000000000000000000000000000.drbin -r /system/app/mcRegistry/5a7b770d08d14b8fb00f53de4173145a.drbin -r /system/app/mcRegistry/b5fde92dbeef4ac28855478daa6e6fd7.drbin -r /system/app/mcRegistry/04020000000000000000000000000000.drbin -r /system/app/mcRegistry/04120000000000000000000000000000.drbin
+        user system
+        group system
+        setenv MC_AUTH_TOKEN_PATH /efs
+        setenv PATH /system/bin
+        setenv LD_LIBRARY_PATH /system/lib64:/system/lib
+        disabled
+        oneshot
+        seclabel u:r:vold:s0

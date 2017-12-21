@@ -1,0 +1,10 @@
+on init
+    wait /dev/block/platform/mtk-msdc.0/11230000.msdc0
+    symlink /dev/block/platform/mtk-msdc.0/11230000.msdc0 /dev/block/bootdevice
+
+on boot
+    start chargeled
+
+service chargeled /sbin/chargeled
+    disabled
+    seclabel u:r:healthd:s0
